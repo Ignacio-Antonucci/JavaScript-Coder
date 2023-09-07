@@ -4,7 +4,8 @@ function agregarAlCarrito(precio,cantidad){
     return precio * cantidad //se suma el valor del producto al precio total * la cantidad elegida
      
 }
-
+let idFiltro = 0
+let idProducto = 0 
 let repetir=true
 let repetir2=true
 let repetir3=true
@@ -22,27 +23,51 @@ let tipoAbono = 0
 let montoTotal = 0
 let cantidad= 0
 let montoenvio = 1000
-let precioId1 = 5699.35
-let precioId2 = 7999.99
-let totalProducto 
+let totalProducto
+
+const ahora = new Date()
+
+
+class producto{
+    constructor(id, nombre, precio){
+    this.id=id
+    this.nombre=nombre
+    this.precio=precio
+    }
+    mostrarUnoXUno(){
+        alert(this.id+ ' '+ this.nombre +' precio: $'+ this.precio)
+    }
+}
+const producto1 = new producto (1, 'Mouse Genius Wireless Rojo', 5699.00)
+const producto2 = new producto (2, 'Teclado Genius Wireless Blanco', 7800.00)
+const producto3 = new producto (3, 'Joystick RedDragon ', 3500.00)
+
+const listaProductos=[]
+listaProductos.push(producto1,producto2,producto3)
+
+
 do{
-let idProducto = prompt("Ingresa id de producto\n  1_Mouse genius Wireles Rojo\n  2_Teclado genius Wireless Rojo\no ingrese letra de la opcion\n  C-Ver Monto del carrito\n  S-Salir de la tienda\n(Ingrese valor numerico)")
+idProducto = prompt("F- Filtros de busqueda \nIngresa id de producto\n " +producto1.id +'- ' +producto1.nombre+ "\n"  +producto2.id +'- ' +producto2.nombre+"\n"  +producto3.id +'- ' +producto3.nombre+"\no ingrese letra de la opcion\n  C-Ver Monto del carrito\n  S-Salir de la tienda\n(Ingrese valor numerico)")
+if(idProducto=='f'){        //cambiador a mayusc
+    idProducto='F'
+}
 if(idProducto=='s'){        //cambiador a mayusc
     idProducto='S'
 }
 if(idProducto=='c'){     //cambiador a mayusc
     idProducto='C'
 }
+//inicio del Switch
 switch (idProducto){
 case '1':
 
-alert("Mouse genius Wireless Rojo $"+precioId1)  //se indica el producto
+alert(producto1.nombre+ " $" +producto1.precio)  //se indica el producto
 
 do{ 
 continuar=prompt('Desea añadir al carrito?\n1-Si\n2-No\n(Ingrese valor numerico)') //inicia ciclo para consultar si se añade al carrito 
 if(continuar=='1'){
   
-    totalProducto = agregarAlCarrito(precioId1, cantidad)
+    totalProducto = agregarAlCarrito(producto1.precio, cantidad)
     montoTotal= montoTotal + totalProducto//se suma el valor del producto al precio total * la cantidad elegida
     alert('El monto total del carrito es $'+ montoTotal)
     repetir=false
@@ -74,12 +99,12 @@ break;
 
 
 case '2':
-    alert("Teclado genius Wireless Rojo $"+precioId2)
+    alert(producto2.nombre+ " $"+producto2.precio)
     do{ 
         continuar=prompt('Desea añadir al carrito?\n1-Si\n2-No\n(Ingrese valor numerico)') //inicia ciclo para consultar si se añade al carrito 
         if(continuar=='1'){
           
-            totalProducto = agregarAlCarrito(precioId2, cantidad)
+            totalProducto = agregarAlCarrito(producto2.precio, cantidad)
             montoTotal= montoTotal + totalProducto//se suma el valor del producto al precio total * la cantidad elegida
             alert('El monto total del carrito es $'+ montoTotal)
             repetir=false
@@ -106,6 +131,41 @@ case '2':
         }while(repetir2)
 
 break
+
+case '3':
+    alert(producto3.nombre+ " $"+producto3.precio)
+    do{ 
+        continuar=prompt('Desea añadir al carrito?\n1-Si\n2-No\n(Ingrese valor numerico)') //inicia ciclo para consultar si se añade al carrito 
+        if(continuar=='1'){
+          
+            totalProducto = agregarAlCarrito(producto3.precio, cantidad)
+            montoTotal= montoTotal + totalProducto//se suma el valor del producto al precio total * la cantidad elegida
+            alert('El monto total del carrito es $'+ montoTotal)
+            repetir=false
+        }else if(continuar=='2'){
+            repetir = false
+        }else{
+            alert('Error en el ingreso')
+            repetir=true
+        }
+        }while(repetir)
+
+        do{ 
+            continuar=prompt('Desea volver al catalogo de opciones?\n-1 Si\n-2 No, salir de la aplicacion\n(Ingrese el valor numerico)')
+            if(continuar=='1'){
+            repetir=true
+            repetir2=false
+        }else if(continuar=='2'){
+            repetir = false
+            repetir2=false
+        }else{
+            alert('error en el ingreso')
+            repetir2=true
+        }
+        }while(repetir2)
+
+break
+
 
 case 'C':
     do{ 
@@ -486,9 +546,65 @@ case 'S':
     repetir=false
     break;
 
-default:
-    alert('Ingrese un numero de ID valido')
-break
+    default:
+        alert('Ingrese un numero de ID valido')
+    break
+//filtros
+    case 'F': 
+    idFiltro = prompt("Elija el filtro que quiere aplicar (los resultados seran mostrado en la consola).\nt- Mostrar todos los productos\na- Precio Maximo\nb- Precio Minimo\nc- De menor a mayor\nd- De mayor a menor\nf- Que sean Wireless")
+            
+    switch(idFiltro){    
+        case 't':
+            
+        for(const producto of listaProductos){
+        producto.mostrarUnoXUno()   
+        }
+        alert('redirigiendo al catalogo...')
+        break
+
+        case 'a':  
+          let precioMax = parseFloat(prompt('Ingresa el precio maximo de busqueda de su producto'))
+          const listaProductosTecho = listaProductos.filter((producto) => producto.precio < precioMax)
+          console.table(listaProductosTecho)
+          alert('En la consola tendra los resultados de su filtro de busqueda')
+          
+          repetir1=false
+          break
+         
+          case 'b':  
+          let precioMin = parseFloat(prompt('Ingresa el precio minimo de busqueda de su producto'))
+          const listaProductosPiso = listaProductos.filter((producto) => producto.precio > precioMin)
+          console.table(listaProductosPiso)
+          alert('En la consola tendra los resultados de su filtro de busqueda')
+          alert('redirigiendo al catalogo...')
+          repetir1=false
+          break
+      
+          case 'c':
+            listaProductos.sort((a,b)=> a.precio -b.precio)
+            console.table(listaProductos)
+            alert('En la consola tendra los resultados de su filtro de busqueda')
+          alert('redirigiendo al catalogo...')
+            break
+          case 'd':
+                listaProductos.sort((a,b)=> a.precio + b.precio)
+                console.table(listaProductos)
+                alert('En la consola tendra los resultados de su filtro de busqueda')
+          alert('redirigiendo al catalogo...')
+            break
+        case 'f':
+            const listaWireless = listaProductos.filter(listaProductos => listaProductos.nombre.includes ('Wireless'))
+            console.table(listaWireless)
+            alert('En la consola tendra los resultados de su filtro de busqueda')
+            alert('redirigiendo al catalogo...')
+            break
+          default:
+          alert('Ingrese un numero de ID valido')
+          
+          break
+        }
+
+
 }
 }while(repetir)
-alert('Ha salido correctamente\nMuchas gracias por su Visita, le deseamos un buen dia!')
+alert(`Ha salido correctamente a las ${ahora}  \nMuchas gracias por su Visita, le deseamos un buen dia!`)
