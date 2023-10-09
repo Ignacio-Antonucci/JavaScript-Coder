@@ -8,6 +8,13 @@ const botonComprar = document.getElementById('comprar');
 const botonVaciar = document.getElementById('vaciar');
 let botones = document.getElementsByClassName('compra');
 
+const getProductos= async()=> {
+ const response = await fetch("./productos.json")
+ const data= await response.json()
+ console.log(data)
+
+}
+getProductos()
 //dibujar la tabla en el primer renderizado si hay algun carro abandonado
 function dibujarTabla() {
     for (const prod of carrito) {
@@ -31,9 +38,9 @@ if (carrito.length != 0) {
 }
 
 
-function renderizarProds(listaProds) {
+async function renderizarProds(data) {
     catalogo.innerHTML = ''
-    for (const prod of listaProds) {
+    for (const prod of data) {
         catalogo.innerHTML += `
             <div class="tarjeta" style="width: 18rem;">
                 <img class="tajeta__img" src=${prod.imagen} alt=${prod.nombre}/>
@@ -51,7 +58,7 @@ function renderizarProds(listaProds) {
       
         boton.addEventListener('click', () => {
             console.log('Hiciste click en el boton cuyo id es ' + boton.id)
-            const prodACarro = listaProds.find((producto) => producto.id == boton.id)
+            const prodACarro = data.find((producto) => producto.id == boton.id)
             console.log(prodACarro)
            
             agregarAlCarrito(prodACarro)
@@ -142,10 +149,7 @@ function validar(evento) {
 
 
 
-/* //filtro por precio
-const preciosBajos = productos.filter((prod)=>prod.precio<15000)
-console.log(preciosBajos)
-renderizarProds(preciosBajos)*/
+
 //se compra y se limpia el carrito
 botonComprar.onclick=()=>{
     Swal.fire('Se realizo la compra con exito!','Pueder pasar a retirar por el local','success')
