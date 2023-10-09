@@ -10,22 +10,60 @@
 </head>
 <body >
 
-    <header >
+    <header class="container" >
         <h1>Bienvenido Nuestra tienda virtual</h1>
+        <h3>Suscribete</h3>
+      <form id="formulario">
+        <label for="nombre">
+          Nombre
+          <input type="text" name="nombre" id="nombre" placeholder="Juana" />
+        </label>
+        <label for="email">
+          Email:
+          <input
+            type="email"
+            name="email"
+            id="email"
+            placeholder="juani@gmail.com"
+          />
+          <small id="mensaje"></small>
+        </label>
+        <input type="submit" value="enviar" class="btn btn-success" />
+        <input type="button" value="borrar" class="btn btn-danger" onclick="borrarCampos()">
+      </form>
     </header>
 
     <main>    
 
 
-
-    <seccion id="catalogo" >     
-
-    <article id="tarjetas" class="catalogo">
-
-    </article>
  
 </seccion>
+    </header>
+    <!--Catalogo de-->  
+    <section id="catalogo" class="catalogo">
+      </section>
 
+      <section>
+        <h4>Tu carrito:</h4>
+        <table class="table table-striped">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Nombre</th>
+              <th>Precio</th>
+            </tr>
+          </thead>
+          <!--carrito-->
+          <tbody id="carrito">
+           
+          </tbody>
+        </table>
+        <h4 id="total">Total a pagar $:</h4>
+      </section>
+      <section>
+        <button class='btn btn-success' id="comprar">Finalizar Compra</button>
+        <button class='btn btn-warning' id="vaciar">Vaciar carrito</button>
+      </section>
 
 
 
@@ -43,9 +81,9 @@
     
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     
-    <script src="./productos.js"> </script>
-    <script src="./index2.js"> </script> 
-     
+    <script src="./productos.js"></script>
+    <script src="./preentrega1-antonucci.js"> </script> 
+
 
 </body>
 
